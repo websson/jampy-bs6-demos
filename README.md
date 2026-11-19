@@ -18,4 +18,5 @@ which takes precedence over an installed `jam.py-v7` package. To run one locally
     python server.py 8080
 
 Jam.py is BSD-3-Clause licensed; the code here is the Jam.py team's work, unchanged apart from removed caches,
-logs and lock files.
+logs and lock files, and one fix: the login page shows "Wrong username or password." after a failed sign-in
+(it showed the CSS class name 'error-modal-border').
