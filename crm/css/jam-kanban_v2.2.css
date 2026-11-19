@@ -1,0 +1,214 @@
+/*
+    ---------------------------
+    BOARD THEME VARIABLES
+    ---------------------------
+*/
+.cd_kanban_board {
+    /* Light Theme Defaults */
+    --kb-title-bg: #343a40;
+    --kb-title-color: #FFF;
+    --kb-block-bg: #f2f2f2;
+    --kb-item-bg: #FFF;
+    --kb-item-border: #c0c2cd;
+    --kb-item-text: inherit;
+    --kb-footer-border: #c0c2cd;
+    --kb-link-color: inherit;
+	--kb-badge-bg: rgba(255, 255, 255, 0.25);
+    --kb-badge-color: #ffffff;
+}
+
+/* Dark (Black) Theme Overrides */
+.cd_kanban_board.kanban-theme-dark {
+    --kb-title-bg: #000000;       /* Solid black for titles to fit dark themes */
+    --kb-title-color: #ffffff;    /* Pure white text for high contrast */
+    --kb-block-bg: #121212;       /* Very dark grey for the column background */
+    --kb-item-bg: #1e1e1e;        /* Slightly lighter grey for the cards */
+    --kb-item-border: #333333;    /* Subtle borders for cards */
+    --kb-item-text: #e0e0e0;      /* Off-white text for readability */
+    --kb-footer-border: #333333;
+    --kb-link-color: #58a6ff;     /* Nice blue for links in dark mode */
+	--kb-badge-bg: #333333;
+    --kb-badge-color: #ffffff;
+}
+
+/*
+    ---------------------------
+    BOARD STYLES
+    ---------------------------
+*/
+.cd_kanban_board {
+    width: 100%; 
+    box-sizing: border-box;
+    height: auto;
+    display: block;
+    clear: both;
+    overflow-x: auto;
+    border-radius: 1.4em;
+}
+
+.cd_kanban_board > .cd_kanban_board_titles {
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    clear: both;
+}
+
+.cd_kanban_board > .cd_kanban_board_titles:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.cd_kanban_board > .cd_kanban_board_titles .cd_kanban_board_title {
+    margin: 0 10px 0 0;
+    padding: 1rem;
+    color: var(--kb-title-color);
+    position: relative;
+    flex: 1;
+}
+
+.cd_kanban_board > .cd_kanban_board_titles .cd_kanban_board_title:before {
+    width: 80%;
+    height: 100%;
+    background: var(--kb-title-bg);
+    display: block;
+    clear: both;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    content: "";
+    z-index: 1; /* Keep background behind text */
+    border-radius: 0.5em 0.5em 0 0; /* Optional: rounds top corners of title background */
+}
+
+/* FIX: Target spans instead of p tags so text stays above the background */
+.cd_kanban_board > .cd_kanban_board_titles .cd_kanban_board_title span {
+    position: relative;
+    z-index: 10;
+    margin: 0px;
+}
+
+.cd_kanban_board > .cd_kanban_board_titles .cd_kanban_board_title:last-child {
+    margin: 0px;
+}
+
+.cd_kanban_board > .cd_kanban_board_blocks {
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    clear: both;
+}
+
+.cd_kanban_board > .cd_kanban_board_blocks:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.cd_kanban_board > .cd_kanban_board_blocks .cd_kanban_board_block {
+    height: 70%;
+    margin: 10px 10px 10px 0;
+    padding: 1rem;
+    flex: 1;
+    background: var(--kb-block-bg);
+    overflow-y: auto;
+    border-radius: 0.5em; /* Optional: matches modern aesthetic */
+}
+
+.cd_kanban_board > .cd_kanban_board_blocks .cd_kanban_board_block:last-child {
+    margin: 10px 0 0;
+}
+
+.cd_kanban_board > .cd_kanban_board_blocks .cd_kanban_board_block .cd_kanban_board_block_item {
+    width: 100%; 
+    box-sizing: border-box; 
+    height: auto;
+    margin: 0 0 10px;
+    padding: 0.75rem;
+    display: block;
+    clear: both;
+    background: var(--kb-item-bg);
+    border: 1px solid var(--kb-item-border);
+    color: var(--kb-item-text);
+    -webkit-transition: -webkit-transform 300ms ease-in-out;
+    -moz-transition: -moz-transform 300ms ease-in-out;
+    -ms-transition: -ms-transform 300ms ease-in-out;
+    -o-transition: -o-transform 300ms ease-in-out;
+    transition: transform 300ms ease-in-out;
+    transform: rotate(0deg);
+    border-radius: 1em;
+}
+
+.cd_kanban_board > .cd_kanban_board_blocks .cd_kanban_board_block .cd_kanban_board_block_item a {
+    font-style: italic;
+    text-decoration: underline;
+    margin: 5px 0 0;
+    display: block;
+    color: var(--kb-link-color);
+}
+
+.cd_kanban_board > .cd_kanban_board_blocks .cd_kanban_board_block .cd_kanban_board_block_item .cd_kanban_board_block_item_title {
+    margin: 0 0 0.25rem;
+    padding: 0 0 0 20px;
+    background: url("images/dragger.png") 0px 0px no-repeat;
+    font-size: 1rem !important;
+    line-height: 1rem;
+    font-weight: bold;
+}
+
+.cd_kanban_board > .cd_kanban_board_blocks .cd_kanban_board_block .cd_kanban_board_block_item.ui-sortable-helper { 
+    transform: rotate(-4deg); 
+}
+
+.cd_kanban_board_block_item_placeholder {
+    width: 100%;
+    height: 60px;
+    margin: 0 0 10px;
+    display: block;
+    clear: both;
+    border: 1px dashed var(--kb-item-border);
+}
+
+.cd_kanban_board > .cd_kanban_board_blocks .cd_kanban_board_block .cd_kanban_board_block_item .cd_kanban_board_block_item_footer {
+    margin: 0.75rem -0.75rem -0.75rem;
+    padding: 0.75rem;
+    display: block;
+    clear: both;
+    border-top: 1px solid var(--kb-footer-border);
+}
+
+/* Creates a flexbox layout to push the title to the left 
+   and the badge to the right, while keeping it above the background 
+*/
+.cd_kanban_board > .cd_kanban_board_titles .cd_kanban_board_title .cd_kanban_board_title_inner {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+/* Ensure the text span itself doesn't mess up the flex layout */
+.cd_kanban_board > .cd_kanban_board_titles .cd_kanban_board_title .cd_kanban_board_title_inner span.cd_kanban_board_title_text {
+    margin: 0;
+    font-weight: bold;
+}
+
+/* Style the counter to look like a modern Bootstrap 5 pill badge, 
+   but natively so it doesn't require Bootstrap to function.
+*/
+.cd_kanban_board > .cd_kanban_board_titles .cd_kanban_board_title .cd_kanban_board_title_counter {
+    display: inline-block;
+    padding: 0.35em 0.65em;
+    font-size: 0.75em;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 50rem; /* Creates the rounded pill look */
+    background-color: var(--kb-badge-bg);
+    color: var(--kb-badge-color);
+    margin: 0;
+}

@@ -1,0 +1,321 @@
+/* JamDataPivot Scope Variables */
+.jdp-root {
+  --jdp-bg: #ffffff;
+  --jdp-surface: #f8fafc;
+  --jdp-border: #e2e8f0;
+  --jdp-text: #1e293b;
+  --jdp-text-muted: #64748b;
+  --jdp-primary: #3b82f6;
+  --jdp-primary-hover: #2563eb;
+  --jdp-accent: #eff6ff;
+  --jdp-drilldown-bg: #f1f5f9;
+  --jdp-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  --jdp-radius: 8px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--jdp-text);
+  background: var(--jdp-bg);
+  box-sizing: border-box;
+}
+
+.jdp-root.jdp-dark {
+  --jdp-bg: #0f172a;
+  --jdp-surface: #1e293b;
+  --jdp-border: #334155;
+  --jdp-text: #f8fafc;
+  --jdp-text-muted: #94a3b8;
+  --jdp-primary: #3b82f6;
+  --jdp-accent: #1e3a8a;
+  --jdp-drilldown-bg: #020617;
+  --jdp-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+}
+
+.jdp-root * {
+  box-sizing: border-box;
+}
+
+.jdp-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+/* Toolbar */
+.jdp-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px;
+  background: var(--jdp-surface);
+  padding: 14px 16px;
+  border-radius: var(--jdp-radius);
+  border: 1px solid var(--jdp-border);
+}
+
+.jdp-control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.jdp-search-group {
+  flex-grow: 1;
+  min-width: 160px;
+}
+
+.jdp-actions-group {
+  margin-left: auto;
+}
+
+.jdp-export-btn-group {
+  display: flex;
+  gap: 6px;
+}
+
+.jdp-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--jdp-text-muted);
+}
+
+.jdp-select, .jdp-input {
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid var(--jdp-border);
+  border-radius: 6px;
+  background-color: var(--jdp-bg);
+  color: var(--jdp-text);
+  font-size: 0.875rem;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.jdp-select:focus, .jdp-input:focus {
+  border-color: var(--jdp-primary);
+}
+
+.jdp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 12px;
+  border-radius: 6px;
+  border: 1px solid var(--jdp-border);
+  background: var(--jdp-bg);
+  color: var(--jdp-text);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.jdp-btn:hover {
+  background: var(--jdp-accent);
+  border-color: var(--jdp-primary);
+  color: var(--jdp-primary);
+}
+
+/* Summary Cards */
+.jdp-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.jdp-card {
+  background: var(--jdp-surface);
+  border: 1px solid var(--jdp-border);
+  border-radius: var(--jdp-radius);
+  padding: 12px 16px;
+  box-shadow: var(--jdp-shadow);
+}
+
+.jdp-card-highlight {
+  border-left: 4px solid var(--jdp-primary);
+}
+
+.jdp-card-title {
+  font-size: 0.75rem;
+  color: var(--jdp-text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.jdp-card-value {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--jdp-text);
+}
+
+/* Main Pivot Table */
+.jdp-table-container {
+  overflow-x: auto;
+  border: 1px solid var(--jdp-border);
+  border-radius: var(--jdp-radius);
+  box-shadow: var(--jdp-shadow);
+}
+
+.jdp-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.875rem;
+}
+
+.jdp-table th {
+  background: var(--jdp-surface);
+  color: var(--jdp-text-muted);
+  font-weight: 600;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--jdp-border);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.03em;
+}
+
+.jdp-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--jdp-border);
+}
+
+.jdp-parent-row {
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.jdp-parent-row:hover, .jdp-parent-row.jdp-expanded {
+  background-color: var(--jdp-accent);
+}
+
+.jdp-group-flex {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.jdp-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: none;
+  background: transparent;
+  color: var(--jdp-text-muted);
+  cursor: pointer;
+  padding: 0;
+  border-radius: 4px;
+}
+
+.jdp-chevron {
+  transition: transform 0.2s ease;
+}
+
+.jdp-chevron.jdp-rotate {
+  transform: rotate(90deg);
+  color: var(--jdp-primary);
+}
+
+.jdp-group-badge {
+  display: inline-block;
+  padding: 3px 8px;
+  background: var(--jdp-bg);
+  border: 1px solid var(--jdp-border);
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.jdp-val-bold {
+  font-weight: 700;
+  color: var(--jdp-primary);
+}
+
+.jdp-share-bar-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.jdp-share-bar {
+  height: 6px;
+  background-color: var(--jdp-primary);
+  border-radius: 3px;
+  min-width: 2px;
+  transition: width 0.3s ease;
+}
+
+.jdp-share-text {
+  font-size: 0.75rem;
+  color: var(--jdp-text-muted);
+  width: 40px;
+  text-align: right;
+}
+
+/* Drilldown Row & Nested Table */
+.jdp-drilldown-row td.jdp-drilldown-cell {
+  padding: 0 !important;
+  background-color: var(--jdp-drilldown-bg);
+  border-bottom: 2px solid var(--jdp-border);
+}
+
+.jdp-drilldown-container {
+  padding: 12px 16px 16px 36px;
+}
+
+.jdp-drilldown-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: var(--jdp-text-muted);
+  margin-bottom: 8px;
+}
+
+.jdp-nested-table-wrapper {
+  overflow-x: auto;
+  border: 1px solid var(--jdp-border);
+  border-radius: 6px;
+  background: var(--jdp-bg);
+}
+
+.jdp-nested-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+}
+
+.jdp-nested-table th {
+  background: var(--jdp-surface);
+  color: var(--jdp-text-muted);
+  font-weight: 600;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--jdp-border);
+  font-size: 0.7rem;
+}
+
+.jdp-nested-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--jdp-border);
+}
+
+.jdp-nested-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.jdp-nested-table tbody tr:hover {
+  background-color: var(--jdp-accent);
+}
+
+.jdp-th-left, .jdp-td-left { text-align: left; }
+.jdp-th-right, .jdp-td-right { text-align: right; }
+
+.jdp-empty-msg {
+  text-align: center;
+  color: var(--jdp-text-muted);
+  padding: 24px !important;
+}

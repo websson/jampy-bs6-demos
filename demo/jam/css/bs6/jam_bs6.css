@@ -1,0 +1,1031 @@
+html {
+   font-size: 14px;
+}
+
+/* Reduce dialog open transition so visibility:hidden window is imperceptible
+   before on_edit_form_shown callbacks finish and content is revealed. */
+dialog.jam-modal {
+    --bs-dialog-transition-duration: 0.05s;
+    /* Center short forms; scroll tall forms internally while header stays reachable. */
+    position: fixed !important;
+    inset: 0 !important;
+    margin: auto !important;
+    max-height: calc(100dvh - 4rem) !important;
+    overflow-y: auto !important;
+}
+
+/* Bootstrap 6 compatibility utilities */
+.muted {
+    color: var(--bs-fg-2, color-mix(in oklch, var(--bs-fg-body) 60%, transparent));
+}
+
+.modal-dialog-centered-horizontally {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: auto;
+}
+
+.jam-modal {
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+    border: 0;
+    position: fixed;
+}
+
+
+/* Mobile-first responsive dialog & form sizing */
+@media (width < 768px) {
+    .jam-modal.dialog,
+    dialog.jam-modal {
+        max-width: calc(100% - 1rem) !important;
+        width: calc(100% - 1rem) !important;
+        margin-left: 0.5rem !important;
+        margin-right: 0.5rem !important;
+		/*overflow-y: auto;
+        max-height: calc(100dvh - 8rem);*/
+    }
+
+    /* Wrap footer and header buttons on narrow screens */
+    .card .form-footer,
+    .card .form-header {
+        flex-wrap: wrap !important;
+        gap: 0.4rem;
+    }
+
+    .card .form-header > button,
+    .card .form-header > .btn {
+        flex: 1 1 auto;
+    }
+
+    .card .form-footer {
+        justify-content: center;
+    }
+
+    /* Ensure tables and controls in form-body don't blow out mobile width */
+    .jam-modal .form-body,
+    .card.jam-form .form-body {
+        max-width: 100%;
+        overflow-x: auto;
+    }
+
+    /* Shrink button label text on very small screens to avoid overflow */
+    .card .form-footer button small,
+    .card .form-header button small {
+        display: none;
+    }
+}
+
+/*.menu-item li {
+    position: relative;
+}
+
+.menu-item .submenu {
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: -7px;
+}
+
+.menu .submenu-left {
+    right: 100%;
+    left: auto;
+}
+
+.menu > li:hover > .submenu {
+    display: block;
+}*/
+
+
+.outer-table > tbody > tr {
+    border-width: 0 0;
+}
+
+.outer-table > tfoot th {
+    padding: 0.5rem 0.125rem;
+}
+
+.outer-table > thead > tr {
+    border-width: 1px 0 1px 0;
+}
+
+.dbtable th,
+.dbtable td {
+    overflow-wrap: normal;
+}
+
+.inner-table tr {
+    border-width: 1px 0 0 0;
+    border-color: var(--bs-table-border-color);
+}
+
+.inner-table tr:first-of-type {
+    border-width: 0;
+}
+
+.inner-table td {
+    border-width: 0 1px;
+    border-color: var(--bs-table-border-color);
+    padding: 0.5rem 0.5rem;
+}
+
+.dbtable tr th:first-child,
+.dbtable tr td:first-child {
+    border-left-style: none;
+}
+
+.dbtable tr th:last-child,
+.dbtable tr td:last-child,
+.dbtable tr td:nth-last-child(2) {
+    border-right-style: none;
+}
+
+
+.outer-table.table-bordered {
+    border-style: solid;
+    border-width: 0 1px 1px 1px;
+    border-color: var(--bs-table-border-color);
+}
+
+div.th-container {
+    overflow: hidden;
+}
+
+div.th-table {
+    display: table;
+    width: 100%;
+    height: 100%;
+}
+
+div.th-text {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.dbtable td,
+.dbtable th {
+    cursor: default;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -ms-user-select: none;
+}
+
+.dbtable td.multi-select {
+    width: 4%;
+}
+
+.dbtable td > div {
+    padding: 0;
+}
+
+.dbtable th.multi-select div.multi-select {
+    margin-top: -0.5rem;
+}
+
+.dbtable th.multi-select .sel-count,
+.dbtable th.multi-select-checkbox .sel-count {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 10px;
+    font-style: italic;
+    color: var(--bs-primary-base, #0d6efd);
+}
+
+.dbtable th.multi-select .sel-count.selected-shown {
+    color: var(--bs-danger-base, #dc3545);
+}
+
+.dbtable th.multi-select .mselect-btn {
+    padding: 0.125rem 0.25rem;
+}
+
+.dbtable th.multi-select .select-block {
+    border: 1px solid var(--bs-secondary-base, var(--bs-border-color));
+    border-radius: var(--bs-radius-3, 0.25rem);
+}
+
+.dbtable th.multi-select .select-menu-btn {
+    padding: 0 0.25rem;
+    border-width: 0 0 0 1px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dbtable th.multi-select .multi-select-checkbox {
+    margin: 0.375rem 0 0 0;
+}
+
+.card.jam-form {
+    outline: none;
+}
+
+.tab-pane > .card.jam-form {
+    border-top-width: 0;
+    border-radius: 0 0 var(--bs-card-border-radius) var(--bs-card-border-radius);
+}
+
+
+.card.jam-form form.well   {
+    border: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color);
+    border-radius: var(--bs-card-border-radius)
+}
+
+
+.card.jam-form .tab-pane form   {
+    border-width: 0 var(--bs-border-width) var(--bs-border-width) var(--bs-border-width);
+    border-style: var(--bs-border-style);
+    border-color: var(--bs-border-color);
+    border-radius: 0 0 var(--bs-card-border-radius) var(--bs-card-border-radius)
+}
+
+
+.tabs-div .nav-link {
+    color: var(--bs-nav-tabs-link-active-color)
+}
+
+.card .form-header {
+    display: flex;
+    flex-shrink: 0;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    padding: var(--bs-card-cap-padding-y) var(--bs-card-cap-padding-x);
+    margin-bottom: 0;
+    color: var(--bs-card-cap-color);
+    background-color: var(--bs-card-cap-bg);
+    border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);
+    outline: none;
+}
+
+.card .form-header > * {
+    margin: calc(var(--bs-card-cap-padding-x) * 0.3);
+}
+
+.tab-pane > .card .form-header:first-child {
+  border-radius: var(--bs-card-inner-border-radius) var(--bs-card-inner-border-radius) 0 0;
+}
+
+.card .form-body {
+    flex: 1 1 auto;
+    padding: 0.25rem 0.25rem;
+    padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x);
+    color: var(--bs-card-color);
+    outline: none;
+}
+
+.card.form-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.form-header-close-btn,
+.form-header-print-btn {
+    align-self: flex-start
+}
+
+.form-header-filters {
+    flex-grow: 5;
+    flex-shrink: 1;
+    display: flex;
+    align-items: center;
+}
+
+.form-header-filters .filters-text {
+    margin-left: 1rem;
+}
+
+.form-header-filters-btn {
+    position: relative;
+}
+
+.form-header-filters .filtered_sign {
+    position: absolute;
+    top: 10%;
+    right: 0.25rem;
+}
+
+h5.form-title {
+    margin: 0;
+    padding: 0;
+}
+
+/*
+.card.no-border,
+.card.no-border .form-header,
+.card.no-border .form-footer {
+    border-width: 0;
+}
+*/
+
+/*
+.card.no-border .form-body {
+    padding: 0;
+    border: 0;
+}
+*/
+
+.card .form-footer {
+    display: flex;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    text-align: right !important;
+    padding: var(--bs-card-cap-padding-y) var(--bs-card-cap-padding-x);
+    color: var(--bs-card-cap-color);
+    background-color: var(--bs-card-cap-bg);
+    border-top: var(--bs-card-border-width) solid var(--bs-card-border-color);
+	border-end-start-radius: var(--bs-radius-7);
+	border-end-end-radius: var(--bs-radius-7);
+}
+
+.card .form-footer.message {
+    justify-content: space-around;
+}
+
+.card .form-footer > * {
+    margin: calc(var(--bs-card-cap-padding-x) * 0.3);
+}
+
+.card .form-footer #report-btn {
+    padding: 0;
+}
+
+.modal-backdrop.show {
+    background-color: var(--bs-black, #000);
+    opacity: 0.5;
+}
+
+
+.jam-modal .card .form-footer {
+    background-color: var(--bs-dialog-footer-bg, var(--bs-bg-body, #fff));
+	border-end-start-radius: var(--bs-radius-7);
+	border-end-end-radius: var(--bs-radius-7);
+}
+
+.jam-modal .card .form-header,
+.jam-modal .card .form-body {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.selection-box {
+    position:    absolute;
+    background: transparent;
+    border:     1px dotted #999;
+}
+
+.table tbody tr.row-selected > td {
+    color: var(--bs-table-active-color);
+    background-color: var(--bs-table-active-bg);
+}
+
+.table tbody tr.table-focused > td {
+    backdrop-filter: contrast(0.9);
+	color: var(--bs-table-active-color);
+	background-color: var(--bs-table-active-bg);
+}
+
+.table tbody td.field-selected {
+    backdrop-filter: contrast(0.85);
+}
+
+.table tbody tr.table-focused > td.field-selected {
+    backdrop-filter: contrast(0.65);
+	color: var(--bs-table-active-color);
+	background-color: var(--bs-table-active-bg);
+}
+
+.table.striped tr:nth-child(odd):not(.selected) > td,
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+    background-color: var(--bs-table-striped-bg);
+    color: var(--bs-table-striped-color);
+}
+
+.close-form-btn,
+.close-tab-btn {
+    cursor: pointer;
+}
+.close-form-btn {
+    margin-top: 0.5rem;
+}
+
+.close-tab-btn:hover {
+    color: #000;
+}
+
+td .inline-editor {
+    position: absolute;
+    width: calc(100% - 4px);
+    height: calc(100% - 4px);
+    top: 0;
+    left: 0;
+    margin: 2px 0 0 2px;
+    border-radius: 0;
+}
+
+th .title-search-btn {
+    position: absolute;
+    padding: 0.25rem 0.5rem 0.25rem 0.5rem;
+    top: 50%;
+    transform: translate(0, -50%);
+    left: 0;
+    margin: 0 0 0 0.25rem;
+    opacity: 0.3;
+}
+
+th .title-search-btn:hover {
+    opacity: 0.6;
+}
+
+th .title-search-input-form {
+    position: absolute;
+    width: calc(100% - 2px);
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translate(0, -50%);
+    margin: auto;
+    white-space: nowrap;
+}
+
+th .title-search-input-form input {
+    padding: 0 0.375rem 0 0.375rem;
+    margin: -0.25rem 0 0 0;
+    border-radius: 0;
+    transition: none;
+}
+
+th .title-search-input-form .title-search-input-label {
+    padding: 0;
+    margin: 0 0 1px 0;
+    opacity: 0.7;
+    font-size: 12px;
+    display: block;
+    margin-top: -0.25rem;
+    color: var(--bs-primary-base, #0d6efd);
+    text-align: center;
+    overflow: hidden;
+}
+
+td .hint-btn {
+    position: absolute;
+    padding: 0.375rem 0.5rem 0.275rem 0.5rem;
+    top: 50%;
+    transform: translate(0, -50%);
+    right: 0;
+    margin: 0 0.125rem 0 0;
+    border: 0;
+    background-color: rgba(0, 0, 0, 0.05);
+    color: var(--bs-fg-body, #212529);
+    font-size: 8px;
+}
+
+form.input-form {
+    padding: 1rem 1rem 0.5rem 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.form-label.required:after {
+    content: " *";
+    color: var(--bs-danger-base, #dc3545);
+}
+
+.input-centered-label {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.form-check-input.check-box-centered-input {
+    margin-right: 0.5rem;
+}
+
+.datepicker td,
+.datepicker th {
+    width: 40px;
+    height: 35px;
+}
+
+.alert-stack {
+    position: fixed;
+    z-index: 3000 !important;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 420px;
+    max-width: calc(100vw - 2rem);
+    pointer-events: none;
+}
+
+.alert-stack .alert {
+    pointer-events: auto;
+}
+
+.toast-container {
+    z-index: 3000 !important;
+}
+
+dialog.jam-modal {
+    overflow: visible;
+}
+
+.alert-absolute {
+	z-index: 3000 !important;
+    display: flex;
+    align-items: flex-start;
+    min-width: 0;
+    width: 100%;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+}
+
+.accordion-body p {
+    margin: 0.75rem 0;
+}
+
+.accordion-body p:first-child {
+    margin-top: 0
+}
+
+.accordion-body p:last-child {
+    margin-bottom: 0
+}
+
+.consistent-height .tab-content {
+    display: flex;
+}
+
+.consistent-height .tab-content > .tab-pane {
+    display: block;
+    visibility: hidden;
+    margin-inline-end: -100%;
+    width: 100%;
+}
+
+.consistent-height .tab-content > .active {
+    visibility: visible;
+}
+
+.checkbox-centered-label {
+    margin-bottom: 0.925rem;
+    white-space: normal;
+    word-break: break-word;
+}
+
+.form-check-label {
+    white-space: normal;
+    word-break: break-word;
+}
+
+.dbtree {
+    padding: 2px;
+    outline: none;
+}
+
+.dbtree li div {
+    white-space: nowrap;
+}
+
+.dbtree li div {
+    cursor: default;
+    margin: 1px;
+}
+
+.dbtree li.selected > div span.tree-text {
+    background-color: #e5e5e5;
+}
+
+.dbtree li.selected-focused > div span.tree-text {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.dbtree li div span.tree-text {
+    display: inline-block;
+    cursor: default;
+    padding: 3px 8px;
+}
+
+.dbtree ul:first-child {
+    margin-left: 0px;
+}
+
+#navbar-toggler-btn {
+    transition: none;
+}
+
+.paginate-scroll {
+    opacity: 0.3;
+}
+
+.error-modal-border {
+    border: 1px solid red;
+}
+
+/* fix for new zebra datepicker plugin commented 03.07.2026*/
+/*.first-btn {
+    height: calc(1.5em + 0.75rem + 2px) !important;
+    flex-shrink: 0;
+}*/
+
+/* new zebra datepicker modal form fix */
+.modal-body .Zebra_DatePicker_Icon {
+    top: 8px    !important;
+}
+
+/* Modern dynamic button styles matching the active theme input values */
+.input-group .btn-seamless {
+    background: transparent;
+    padding: 0 0.75rem;
+    /* Automatically inherit matching input theme outline colors */
+    border-color: /*var(--bs-btn-hover-border-color);*/ var(--bs-border-color);
+    color: var(--bs-fg-body, var(--bs-body-color));
+    opacity: 0.85;
+    transition: opacity 0.15s ease-in-out, background-color 0.15s ease-in-out;
+    display: flex;
+    align-items: center;
+    box-shadow: none !important;
+}
+
+/* Maintain hover micro-interactions if the element is active */
+.input-group:not([readonly]):not(.disabled) .btn-seamless:not([disabled]):not(.disabled):hover {
+    opacity: 1;
+    background-color: var(--bs-bg-2, #E6E6E6);
+	color: var(--bs-fg-body, #000);
+	border-color: var(--bs-border-color, #D3D3D3);
+	font-weight: bold;
+}
+/*when its active*/
+.input-group:not([readonly]):not(.disabled) .btn-seamless:not([disabled]):not(.disabled):active {
+    opacity: 1;
+    background-color: var(--bs-bg-body, #fff);
+	color: var(--bs-fg-body, #000);
+	border-color: var(--bs-border-color, #D3D3D3);
+	font-weight: bold;
+}
+
+/* 1. Date/Datetime: first-btn on the START (left side) with rounded start corners */
+.input-group > .first-btn.btn-start-placement {
+    border-top: 1px solid var(--bs-border-color);
+    border-bottom: 1px solid var(--bs-border-color);
+    border-left: 1px solid var(--bs-border-color);
+    border-right: none;
+    border-top-left-radius: var(--bs-radius-5) !important;
+    border-bottom-left-radius: var(--bs-radius-5) !important;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+/* 2. Lookups/Dropdowns: first-btn in the MIDDLE (no rounding, top & bottom borders only) */
+.input-group > .form-control + .first-btn.btn-middle-placement {
+    border-top: 1px solid var(--bs-border-color);
+    border-bottom: 1px solid var(--bs-border-color);
+    border-left: none;
+    border-right: none;
+    border-radius: 0 !important;
+}
+
+/* 3. Lookups/Dates/Files: second-btn/last-btn on the END (far right edge) with rounded end corners */
+.input-group > .btn-seamless:last-child {
+    border-top: 1px solid var(--bs-border-color);
+    border-bottom: 1px solid var(--bs-border-color);
+    border-right: 1px solid var(--bs-border-color);
+    border-left: none;
+    border-top-right-radius: var(--bs-radius-5) !important;
+    border-bottom-right-radius: var(--bs-radius-5) !important;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+}
+
+.menu.typeahead {
+    position: absolute !important;
+    z-index: 2050 !important;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible;
+    background-color: var(--bs-bg-body, var(--bs-body-bg, #ffffff));
+    border: 1px solid var(--bs-border-color, #dee2e6);
+    border-radius: var(--bs-radius-5, var(--bs-border-radius, 0.375rem));
+    box-shadow: var(--bs-box-shadow, 0 0.5rem 1rem rgba(0, 0, 0, 0.15));
+    padding: 0.25rem 0;
+    max-height: 250px;
+    overflow-y: auto !important;
+}
+
+.menu.typeahead .menu-item {
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    clear: both;
+    color: var(--bs-fg-body, var(--bs-body-color, #212529));
+    text-align: inherit;
+    text-decoration: none;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+}
+
+.menu.typeahead .menu-item.active,
+.menu.typeahead .menu-item:hover {
+    color: #ffffff !important;
+    background-color: var(--bs-primary-base, var(--bs-primary, #0d6efd)) !important;
+}
+
+.menu.typeahead .typeahead-highlight {
+    font-weight: 700;
+    color: var(--bs-primary-base, var(--bs-primary, #0d6efd));
+}
+
+.menu.typeahead .menu-item.active .typeahead-highlight {
+    color: #ffffff !important;
+}
+
+
+/* Bootstrap 6 datepicker inside a top-layer <dialog>:
+   When the mainElement is moved into the dialog DOM, its position: absolute
+   would be relative to the dialog's stacking context which breaks vanilla-calendar-pro's
+   coordinate calculations (which are viewport-relative).
+   Fix: use position: fixed inside a dialog so it stays viewport-relative,
+   and ensure the dialog stays overflow: visible so the popup can escape its bounds. */
+dialog.jam-modal [data-vc=calendar] {
+    position: fixed !important;
+}
+
+/* Fix input-group width shrinking when .is-invalid feedback div is appended inside .input-group */
+.input-group {
+    flex-wrap: wrap !important;
+}
+
+.input-group > .invalid-feedback,
+.input-group > .invalid-tooltip {
+    display: block;
+    flex-basis: 100%;
+    width: 100%;
+    margin-top: 0.25rem;
+}
+
+/* Ensure visibility for all field types when .is-invalid is present */
+.is-invalid ~ .invalid-feedback,
+.is-invalid ~ .invalid-tooltip {
+    display: block;
+}
+
+/* Ensure explicit inline widths on form controls are respected and not stretched by flexbox in modal/form contexts */
+.form-control[style*="width"],
+.input-group > .form-control[style*="width"] {
+    flex: 0 0 auto !important;
+}
+
+/* ==========================================================================
+   Bootstrap 6 Drawer / Offcanvas Component Fixes for Mobile Layout
+   ================ ========================================================== */
+dialog.drawer {
+    position: fixed !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    margin: 0 !important;
+    max-height: 100vh !important;
+    height: 100vh !important;
+    z-index: 1055 !important;
+    background-color: var(--bs-body-bg, #212529) !important;
+    color: var(--bs-body-color, #fff) !important;
+    border: none !important;
+    box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.5);
+    padding: 0 !important;
+    transition: transform 0.3s ease-in-out;
+}
+
+dialog.drawer.drawer-end {
+    right: 0 !important;
+    left: auto !important;
+    transform: translateX(100%);
+}
+
+dialog.drawer.drawer-end[open],
+dialog.drawer.drawer-end.show {
+    transform: translateX(0);
+}
+
+dialog.drawer.drawer-start {
+    left: 0 !important;
+    right: auto !important;
+    transform: translateX(-100%);
+}
+
+dialog.drawer.drawer-start[open],
+dialog.drawer.drawer-start.show {
+    transform: translateX(0);
+}
+
+/* Drawer Header and Body layout */
+dialog.drawer .drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    border-bottom: 1px solid var(--bs-border-color, #495057);
+}
+
+dialog.drawer .drawer-body {
+    padding: 1rem;
+    overflow-y: auto;
+    height: calc(100vh - 70px);
+}
+
+/* Prevent body horizontal overflow when drawer is present */
+body {
+    overflow-x: hidden;
+}
+
+/* ==========================================================================
+   Command Palette Theming & Styling
+   ========================================================================== */
+#jam-command-palette-modal {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    backdrop-filter: none !important;
+    border: 1px solid rgba(0, 0, 0, 0.175) !important;
+    padding: 0 !important;
+    color: #212529 !important;
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+    opacity: 1 !important;
+}
+
+#jam-command-palette-modal[data-bs-theme="dark"],
+[data-bs-theme="dark"] #jam-command-palette-modal {
+    background: #212529 !important;
+    background-color: #212529 !important;
+    color: #f8f9fa !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+dialog.jam-modal {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    color: #212529 !important;
+    opacity: 1 !important;
+}
+
+[data-bs-theme="dark"] dialog.jam-modal {
+    background: #212529 !important;
+    background-color: #212529 !important;
+    color: #f8f9fa !important;
+}
+
+dialog.jam-modal::backdrop {
+    background: transparent !important;
+}
+
+#jam-command-palette-modal .dialog-body,
+#jam-command-palette-modal .modal-body,
+#jam-command-palette-modal .modal-content {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    color: #212529 !important;
+}
+
+[data-bs-theme="dark"] #jam-command-palette-modal .dialog-body,
+[data-bs-theme="dark"] #jam-command-palette-modal .modal-body,
+[data-bs-theme="dark"] #jam-command-palette-modal .modal-content {
+    background: #212529 !important;
+    background-color: #212529 !important;
+    color: #f8f9fa !important;
+}
+
+#jam-command-palette-modal .modal-header {
+    background-color: var(--bs-card-cap-bg, transparent) !important;
+    border-bottom-color: var(--bs-border-color) !important;
+}
+
+#jam-command-palette-modal .modal-footer {
+    background-color: var(--bs-card-cap-bg, var(--bs-tertiary-bg)) !important;
+    border-top-color: var(--bs-border-color) !important;
+    color: var(--bs-secondary-color) !important;
+}
+
+#jam-command-palette-modal #jam-command-search-input {
+    background-color: transparent !important;
+    color: var(--bs-body-color) !important;
+}
+
+#jam-command-palette-modal #jam-command-search-input::placeholder {
+    color: var(--bs-secondary-color) !important;
+    opacity: 0.7;
+}
+
+#jam-command-palette-modal .list-group-item {
+    background-color: transparent !important;
+    color: var(--bs-body-color) !important;
+}
+
+#jam-command-palette-modal .list-group-item.active {
+    background-color: var(--bs-tertiary-bg, #e9ecef) !important;
+    color: var(--bs-emphasis-color, #212529) !important;
+    font-weight: 600 !important;
+}
+
+#jam-command-palette-modal [data-bs-theme="dark"] .list-group-item.active,
+[data-bs-theme="dark"] #jam-command-palette-modal .list-group-item.active {
+    background-color: rgba(255, 255, 255, 0.12) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+#jam-command-palette-modal .list-group-item.active .badge {
+    background-color: var(--bs-secondary-bg, #dee2e6) !important;
+    color: var(--bs-body-color, #212529) !important;
+}
+
+#jam-command-palette-modal [data-bs-theme="dark"] .list-group-item.active .badge,
+[data-bs-theme="dark"] #jam-command-palette-modal .list-group-item.active .badge {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    color: #ffffff !important;
+}
+
+#jam-command-palette-modal .list-group-item.active .badge {
+    background-color: var(--bs-light, rgba(255, 255, 255, 0.2)) !important;
+    color: var(--bs-primary) !important;
+}
+
+#jam-command-palette-modal .list-group-item:not(.active) .badge {
+    background-color: var(--bs-secondary-bg) !important;
+    color: var(--bs-secondary-color) !important;
+}
+
+#jam-command-palette-modal kbd {
+    background-color: var(--bs-tertiary-bg, var(--bs-body-bg)) !important;
+    color: var(--bs-body-color) !important;
+    border: 1px solid var(--bs-border-color) !important;
+    font-family: inherit;
+    font-size: 0.75rem;
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+
+/* Bootstrap 6 Floating Labels support & padding adjustments */
+.form-floating > .form-control,
+.form-floating > .form-select {
+    height: calc(3.5rem + 2px);
+    line-height: 1.25;
+}
+
+.form-floating > label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    height: 100%;
+    padding: 1rem 0.75rem;
+    overflow: hidden;
+    text-align: start;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    pointer-events: none;
+    border: 1px solid transparent;
+    transform-origin: 0 0;
+    transition: opacity .1s ease-in-out,transform .1s ease-in-out;
+}
+
+.form-floating > .form-control {
+    padding: 1rem 0.75rem;
+}
+
+.form-floating > .form-control::-moz-placeholder {
+    color: transparent;
+}
+
+.form-floating > .form-control::placeholder {
+    color: transparent;
+}
+
+.form-floating > .form-control:focus,
+.form-floating > .form-control:not(:placeholder-shown) {
+    padding-top: 1.625rem;
+    padding-bottom: 0.625rem;
+}
+
+.form-floating > .form-control:-webkit-autofill {
+    padding-top: 1.625rem;
+    padding-bottom: 0.625rem;
+}
+
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label,
+.form-floating > .form-select ~ label {
+    opacity: .65;
+    transform: scale(.85) translateY(-0.5rem) translateX(0.15rem);
+}
+
+.pull-right {
+    float: right;
+    margin-left: auto !important;
+}
+
+.pull-left {
+    float: left;
+    margin-right: auto !important;
+}
+
+

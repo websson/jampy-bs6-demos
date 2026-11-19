@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table Module Test</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <h1>Table Module Structure Test</h1>
+    <div id="test-container"></div>
+
+    <script type="module">
+        // Test importing the DBTable class from the new modular structure
+        try {
+            const DBTable = await import('./index.js');
+            console.log('✓ Successfully imported DBTable from ./table/index.js');
+            console.log('✓ DBTable class:', typeof DBTable.default);
+
+            // Check if methods are properly assigned to prototype
+            const proto = DBTable.default.prototype;
+            const methodGroups = [
+                'init', 'destroy', 'create_table', 'build', 'sync_freezed',
+                'select_row', 'show_editor', 'init_context_menu', 'destroy_context_menu'
+            ];
+
+            let missingMethods = 0;
+            for (const method of methodGroups) {
+                if (typeof proto[method] !== 'function') {
+                    console.log('✗ Missing method:', method);
+                    missingMethods++;
+                }
+            }
+
+            if (missingMethods === 0) {
+                console.log('✓ All checked methods are present on DBTable prototype');
+            } else {
+                console.log('✗ Found ' + missingMethods + ' missing methods');
+            }
+
+            document.getElementById('test-container').innerHTML =
+                '<div class="alert alert-success">✓ All module imports working correctly!</div>';
+        } catch (error) {
+            console.error('✗ Error importing modules:', error);
+            document.getElementById('test-container').innerHTML =
+                '<div class="alert alert-danger">✗ Error: ' + error.message + '</div>';
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+    <head>
+        <meta charset="utf-8">
+        <title>Jam.py demo</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="static/img/j.png" type="image/png">
+        <link href="jam/css/bs6/bootstrap.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.2/font/bootstrap-icons.min.css">
+        <!-- <link href="jam/css/zebra_datepicker/bootstrap/zebra_datepicker.css" rel="stylesheet"> -->
+        <link href="jam/css/bs6/jam-datepicker_v1.8.css" rel="stylesheet">
+        <link href="jam/css/bs6/jam_bs6.css" rel="stylesheet">
+        <link href="css/project.css" rel="stylesheet">
+        
+        <script type="importmap">
+            {
+                "imports": {
+                    "bootstrap": "./jam/js/bs6/bootstrap.bundle.js"
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <div id="container" class="container" style="display: none">
+            <nav class="navbar lg:navbar-expand bg-1 fg-2">
+                <div class="container-fluid">
+                    <span id="app-title" class="navbar-brand mb-0 h1"></span>
+                    <button id="navbarDrawerToggle" class="btn-icon navbar-toggler" type="button" aria-controls="navbarNavMenu" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon" aria-hidden="true"></span>
+                    </button>
+                    <dialog class="drawer drawer-end" tabindex="-1" id="navbarNavMenu" aria-labelledby="navbarNavMenuLabel" data-bs-auto-close="outside">
+                        <div class="drawer-header">
+                            <h5 class="drawer-title" id="navbarNavMenuLabel">Menu</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="drawer" aria-label="Close"></button>
+                        </div>
+                        <div class="drawer-body">
+                            <ul id="menu" class="navbar-nav me-auto">
+                            </ul>
+                            <div class="d-flex pe-2 justify-content-end align-items-center gap-2">
+                                <div>
+                                    <button class="avatar avatar-subtle theme-primary border-0 bg-transparent p-0" type="button" data-bs-toggle="menu" aria-expanded="false" id="user-avatar-btn" title="User menu">
+                                        <span class="avatar avatar-subtle theme-primary" id="user-avatar-initials">DK</span>
+                                    </button>
+                                    <div class="menu">
+                                        <a class="menu-item" href="#" id="menu-pass-change"><i class="bi bi-key me-2"></i>Change password</a>
+                                        <hr class="menu-divider">
+                                        <a class="menu-item text-danger" href="#" id="menu-log-out"><i class="bi bi-box-arrow-right me-2"></i>Log out</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </dialog>
+                </div>
+            </nav>
+            
+            <div id="content"></div>
+        </div>
+
+
+        <!-- <script src="jam/js/jquery.js"></script> -->
+        <script src="jam/js/jquery-4.0.0.min.js"></script>
+        <script src="jam/js/jquery-migrate-4-0-2.min.js"></script>
+        <script type="module" src="jam/js/bs6/bootstrap.bundle.js"></script> 
+        <!-- <script src="jam/js/zebra_datepicker.js"></script> -->
+        <script src="jam/js/jam-datepicker_v1.8.js"></script>
+        <script src="jam/js/jquery.maskedinput.js"></script>
+        <script type="module" src="jam/js/jam_bs6.js"></script>
+        <script src="static/js/Chart.min.js"></script>
+        
+        <script>
+            $(document).ready(function(){
+                task.load();
+            });
+        </script>
+
+        <script type="module">
+            import * as bootstrap from 'bootstrap';
+            window.bootstrap = bootstrap;
+
+            const drawerEl = document.getElementById('navbarNavMenu');
+            if (drawerEl) {
+                bootstrap.Drawer.getOrCreateInstance(drawerEl);
+            }
+            const togglerBtn = document.querySelector('.navbar-toggler');
+            if (togglerBtn && drawerEl) {
+                togglerBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const drawerInst = bootstrap.Drawer.getOrCreateInstance(drawerEl);
+                    if (drawerEl.hasAttribute('open') || drawerEl.classList.contains('show')) {
+                        drawerInst.hide();
+                    } else {
+                        drawerInst.show();
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>
