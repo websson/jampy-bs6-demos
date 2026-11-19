@@ -704,9 +704,7 @@
                      role="alert">
                     <div class="d-flex align-items-start">
                         <i class="bi bi-exclamation-triangle-fill me-2 mt-1"></i>
-                        <span id="error-message-text">
-                            {{ error }}
-                        </span>
+                        <span id="error-message-text" data-error="{{ error }}"></span>
                     </div>
                 </div>
 
@@ -826,9 +824,12 @@
 
 			});
 
-			const backendError = $('#error-message-text').text().trim();
+			// The server sets error to a CSS class name ('error-modal-border'), not a message: use it only as the
+			// signal that the sign-in failed, and show a readable message instead.
+			const backendError = ($('#error-message-text').attr('data-error') || '').trim();
 
 			if (backendError !== '') {
+				$('#error-message-text').text('Wrong username or password.');
 				$('#login-error-alert').removeClass('d-none');
 			}
 
